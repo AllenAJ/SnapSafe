@@ -1,4 +1,4 @@
-# Walrus Integration in Screenshot App
+# SnapSafe
 
 This project integrates Walrus, a decentralized storage solution, for storing and retrieving screenshots. Here's a summary of how Walrus is integrated:
 
