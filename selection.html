@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+        }
+        #selection-area {
+            position: fixed;
+            border: 2px solid #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: none;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="overlay"></div>
+    <div id="selection-area"></div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        let isSelecting = false;
+        let startX, startY, endX, endY;
+        let totalWidth, totalHeight;
+        const overlay = document.getElementById('overlay');
+        const selectionArea = document.getElementById('selection-area');
+
+        function startSelection(e) {
+            isSelecting = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            selectionArea.style.left = `${startX}px`;
+            selectionArea.style.top = `${startY}px`;
+            selectionArea.style.width = '0';
+            selectionArea.style.height = '0';
+            selectionArea.style.display = 'block';
+        }
+
+        function updateSelection(e) {
+            if (!isSelecting) return;
+
+            endX = Math.min(Math.max(e.clientX, 0), totalWidth);
+            endY = Math.min(Math.max(e.clientY, 0), totalHeight);
+
+            const left = Math.min(startX, endX);
+            const top = Math.min(startY, endY);
+            const width = Math.abs(endX - startX);
+            const height = Math.abs(endY - startY);
+
+            selectionArea.style.left = `${left}px`;
+            selectionArea.style.top = `${top}px`;
+            selectionArea.style.width = `${width}px`;
+            selectionArea.style.height = `${height}px`;
+        }
+
+        function endSelection() {
+            if (!isSelecting) return;
+            isSelecting = false;
+
+            const x = parseInt(selectionArea.style.left);
+            const y = parseInt(selectionArea.style.top);
+            const width = parseInt(selectionArea.style.width);
+            const height = parseInt(selectionArea.style.height);
+
+            if (width > 10 && height > 10) {
+                ipcRenderer.send('area-selected', { x, y, width, height });
+            } else {
+                selectionArea.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('mousedown', startSelection);
+        document.addEventListener('mousemove', updateSelection);
+        document.addEventListener('mouseup', endSelection);
+
+        ipcRenderer.on('start-selection', (event, dimensions) => {
+            totalWidth = dimensions.width;
+            totalHeight = dimensions.height;
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
+            document.body.style.width = `${totalWidth}px`;
+            document.body.style.height = `${totalHeight}px`;
+        });
+    </script>
+</body>
+</html>

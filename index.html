@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LightshotJS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <div id="toolbar" class="dark-toolbar">
+      <div class="tool-group">
+        <button id="rectangle-button" class="tool-button" onclick="setTool('RECTANGLE')" title="Rectangle (R)"><i class="fas fa-square-full"></i> Rectangle</button>
+        <button id="pencil-button" class="tool-button" onclick="setTool('PENCIL')" title="Pencil (P)"><i class="fas fa-pencil-alt"></i> Pencil</button>
+        <button id="text-button" class="tool-button" onclick="setTool('TEXT')" title="Text (T)"><i class="fas fa-font"></i> Text</button>
+        <button id="highlight-button" class="tool-button" onclick="setTool('HIGHLIGHT')" title="Highlight (H)"><i class="fas fa-highlighter"></i> Highlight</button>
+        <!-- <button id="eyedropper-button" class="tool-button" onclick="setTool('EYEDROPPER')" title="Eyedropper (E)"><i class="fas fa-eye-dropper"></i> Eyedropper</button> -->
+        <button id="arrow-button" class="tool-button" onclick="setTool('ARROW')" title="Arrow (A)"><i class="fas fa-long-arrow-alt-right"></i> Arrow</button>
+      </div>
+      <div class="tool-group">
+        <button id="undo-button" class="tool-button" title="Undo (Ctrl+Z)"><i class="fas fa-undo"></i> Undo</button>
+        <button id="crop-button" class="tool-button" title="Crop (C)"><i class="fas fa-crop-alt"></i> Crop</button>
+        <div id="color-picker-container" title="Color Picker">
+          <input type="color" class="dark-color-picker" id="colorPicker" value="#FF0000" />
+          <span id="selected-color" class="color-preview"></span>
+        </div>
+        <div id="line-width-container" title="Line Width">
+          <input type="number" id="lineWidthPicker" min="1" max="20" value="1">
+          <span class="line-width-label">px</span>
+        </div>
+      </div>
+      <div class="tool-group">
+        <button class="action-button" id="save-button" title="Save Screenshot (Ctrl+S)"><i class="fas fa-save"></i> Save Screenshot</button>
+        <button class="action-button" id="close-button" title="Close (Esc)"><i class="fas fa-times"></i> Close</button>
+        <button id="upload-to-walrus-button" class="tool-button">Upload to Walrus</button>
+<<<<<<< HEAD
+        <input type="text" id="blob-id-input" placeholder="Enter Walrus Blob ID" />
+        <button id="read-from-walrus-button" class="tool-button">Read from Walrus</button>
+=======
+>>>>>>> 1e693ed (snapsafe project)
+      </div>
+    </div>
+    <div id="canvas-container">
+      <canvas id="screenshot-canvas"></canvas>
+      <div id="zoom-controls">
+        <button id="zoom-in" title="Zoom In (+)"><i class="fas fa-search-plus"></i></button>
+        <span id="zoom-level">100%</span>
+        <button id="zoom-out" title="Zoom Out (-)"><i class="fas fa-search-minus"></i></button>
+      </div>
+    </div>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+</html>

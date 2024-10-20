@@ -1,0 +1,51 @@
+{
+  "name": "lightshot-js",
+  "version": "1.0.0",
+  "description": "A Lightshot-like screenshot and annotation tool built with Electron and JavaScript.",
+  "main": "main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:css": "tailwindcss -i ./src/input.css -o ./src/styles.css --watch"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@pinata/sdk": "^2.1.0",
+    "axios": "^0.21.4",
+    "dotenv": "^16.4.5",
+    "electron": "^23.0.0",
+    "electron-store": "^7.0.0",
+    "form-data": "^4.0.0",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "electron-builder": "^22.9.1",
+    "postcss": "^8.4.24"
+  },
+  "build": {
+    "appId": "com.lightshotjs.app",
+    "productName": "LightshotJS",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*"
+    ],
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.utilities",
+      "extendInfo": {
+        "LSBackgroundOnly": true
+      }
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  }
+}
